@@ -1,0 +1,203 @@
+import {
+  ECustomerStatus,
+  ENotificationType,
+  ESubscriptionPlan,
+  ESubscriptionStatus,
+} from "@/types";
+import type {
+  ICustomer,
+  INotification,
+  IRevenueDataPoint,
+  IRevenueMetric,
+  ISubscription,
+  IUser,
+} from "@/types";
+
+export const MOCK_USER: IUser = {
+  id: "usr_001",
+  name: "Alex Morgan",
+  email: "alex.morgan@revenueiq.com",
+  avatarUrl: "",
+  role: "Admin",
+};
+
+export const MOCK_NOTIFICATIONS: INotification[] = [
+  {
+    id: "notif_001",
+    title: "New subscription",
+    message: "Acme Corp upgraded to Enterprise plan.",
+    type: ENotificationType.SUCCESS,
+    read: false,
+    createdAt: "2026-06-30T10:30:00Z",
+  },
+  {
+    id: "notif_002",
+    title: "Payment failed",
+    message: "Invoice #1042 for Bright Labs could not be processed.",
+    type: ENotificationType.ERROR,
+    read: false,
+    createdAt: "2026-06-30T08:15:00Z",
+  },
+  {
+    id: "notif_003",
+    title: "Monthly report ready",
+    message: "Your June revenue report is available for download.",
+    type: ENotificationType.INFO,
+    read: true,
+    createdAt: "2026-06-29T16:00:00Z",
+  },
+  {
+    id: "notif_004",
+    title: "Churn risk alert",
+    message: "3 customers have not logged in for 30+ days.",
+    type: ENotificationType.WARNING,
+    read: true,
+    createdAt: "2026-06-28T12:45:00Z",
+  },
+];
+
+export const MOCK_REVENUE_METRICS: IRevenueMetric[] = [
+  {
+    id: "metric_mrr",
+    label: "Monthly Recurring Revenue",
+    value: 284500,
+    change: 12.4,
+    changeType: "increase",
+  },
+  {
+    id: "metric_arr",
+    label: "Annual Recurring Revenue",
+    value: 3414000,
+    change: 11.8,
+    changeType: "increase",
+  },
+  {
+    id: "metric_customers",
+    label: "Active Customers",
+    value: 1248,
+    change: 5.2,
+    changeType: "increase",
+  },
+  {
+    id: "metric_churn",
+    label: "Churn Rate",
+    value: 2.1,
+    change: 0.3,
+    changeType: "decrease",
+  },
+];
+
+export const MOCK_REVENUE_DATA: IRevenueDataPoint[] = [
+  { month: "Jan", revenue: 198000, mrr: 185000, arr: 2220000 },
+  { month: "Feb", revenue: 212000, mrr: 192000, arr: 2304000 },
+  { month: "Mar", revenue: 225000, mrr: 201000, arr: 2412000 },
+  { month: "Apr", revenue: 238000, mrr: 215000, arr: 2580000 },
+  { month: "May", revenue: 251000, mrr: 228000, arr: 2736000 },
+  { month: "Jun", revenue: 268000, mrr: 242000, arr: 2904000 },
+];
+
+export const MOCK_CUSTOMERS: ICustomer[] = [
+  {
+    id: "cust_001",
+    name: "Sarah Chen",
+    email: "sarah@acmecorp.com",
+    company: "Acme Corp",
+    status: ECustomerStatus.ACTIVE,
+    mrr: 4500,
+    joinedAt: "2024-03-15",
+  },
+  {
+    id: "cust_002",
+    name: "James Wilson",
+    email: "james@brightlabs.io",
+    company: "Bright Labs",
+    status: ECustomerStatus.ACTIVE,
+    mrr: 2800,
+    joinedAt: "2024-06-22",
+  },
+  {
+    id: "cust_003",
+    name: "Emily Rodriguez",
+    email: "emily@novatech.com",
+    company: "NovaTech",
+    status: ECustomerStatus.ACTIVE,
+    mrr: 6200,
+    joinedAt: "2023-11-08",
+  },
+  {
+    id: "cust_004",
+    name: "Michael Park",
+    email: "michael@dataflow.co",
+    company: "DataFlow",
+    status: ECustomerStatus.INACTIVE,
+    mrr: 0,
+    joinedAt: "2024-01-30",
+  },
+  {
+    id: "cust_005",
+    name: "Lisa Thompson",
+    email: "lisa@cloudnine.io",
+    company: "CloudNine",
+    status: ECustomerStatus.CHURNED,
+    mrr: 0,
+    joinedAt: "2023-08-14",
+  },
+];
+
+export const MOCK_SUBSCRIPTIONS: ISubscription[] = [
+  {
+    id: "sub_001",
+    customerId: "cust_001",
+    customerName: "Acme Corp",
+    plan: ESubscriptionPlan.ENTERPRISE,
+    status: ESubscriptionStatus.ACTIVE,
+    amount: 4500,
+    billingCycle: "monthly",
+    startDate: "2024-03-15",
+    renewalDate: "2026-07-15",
+  },
+  {
+    id: "sub_002",
+    customerId: "cust_002",
+    customerName: "Bright Labs",
+    plan: ESubscriptionPlan.PROFESSIONAL,
+    status: ESubscriptionStatus.ACTIVE,
+    amount: 2800,
+    billingCycle: "monthly",
+    startDate: "2024-06-22",
+    renewalDate: "2026-07-22",
+  },
+  {
+    id: "sub_003",
+    customerId: "cust_003",
+    customerName: "NovaTech",
+    plan: ESubscriptionPlan.ENTERPRISE,
+    status: ESubscriptionStatus.ACTIVE,
+    amount: 6200,
+    billingCycle: "monthly",
+    startDate: "2023-11-08",
+    renewalDate: "2026-07-08",
+  },
+  {
+    id: "sub_004",
+    customerId: "cust_004",
+    customerName: "DataFlow",
+    plan: ESubscriptionPlan.STARTER,
+    status: ESubscriptionStatus.PAST_DUE,
+    amount: 499,
+    billingCycle: "monthly",
+    startDate: "2024-01-30",
+    renewalDate: "2026-06-30",
+  },
+  {
+    id: "sub_005",
+    customerId: "cust_005",
+    customerName: "CloudNine",
+    plan: ESubscriptionPlan.PROFESSIONAL,
+    status: ESubscriptionStatus.CANCELED,
+    amount: 0,
+    billingCycle: "monthly",
+    startDate: "2023-08-14",
+    renewalDate: "2026-05-14",
+  },
+];
