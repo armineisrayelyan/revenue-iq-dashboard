@@ -10,3 +10,14 @@ export {
   ESubscriptionPlan,
 } from "@/types/subscription";
 export type { IRevenueMetric, IRevenueDataPoint } from "@/types/revenue";
+export type {
+  IDashboardActivity,
+  IDashboardMetric,
+  IDashboardOverview,
+  IMonthlyRevenuePoint,
+  ICustomerGrowthPoint,
+  IRevenueByPlan,
+  TTrendDirection,
+} from "@/types/dashboard";
+export type { IPayment } from "@/types/payment";
+export { EPaymentStatus } from "@/types/payment";

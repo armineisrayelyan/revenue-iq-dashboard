@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
-import { FeaturePage } from "@/components/dashboard/FeaturePage";
+import { DashboardOverview } from "@/components/dashboard/DashboardOverview";
+import { getDashboardOverview } from "@/services/dashboardService";
+import { getRecentPayments } from "@/services/paymentService";
+import { formatLongDate } from "@/utils/formatDate";
 
 export const metadata: Metadata = {
   title: "Dashboard",
 };
 
 export default function DashboardPage() {
+  const overview = getDashboardOverview();
+  const payments = getRecentPayments();
+  const currentDate = formatLongDate(new Date());
+
   return (
-    <FeaturePage
-      title="Dashboard"
-      description="Overview of your revenue performance and key metrics."
-      emptyTitle="Dashboard coming soon"
-      emptyDescription="Revenue metrics, charts, and KPIs will be displayed here once data integrations are connected."
+    <DashboardOverview
+      overview={overview}
+      payments={payments}
+      currentDate={currentDate}
     />
   );
 }
