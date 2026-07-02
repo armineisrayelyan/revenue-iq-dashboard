@@ -2,8 +2,8 @@ export type { INavigationItem, TNavigationIcon } from "@/types/navigation";
 export type { IUser } from "@/types/user";
 export type { INotification } from "@/types/notification";
 export { ENotificationType } from "@/types/notification";
-export type { ICustomer } from "@/types/customer";
-export { ECustomerStatus } from "@/types/customer";
+export type { ICustomer, ICustomerFilters } from "@/types/customer";
+export { ECustomerPlan, ECustomerStatus } from "@/types/customer";
 export type { ISubscription } from "@/types/subscription";
 export {
   ESubscriptionStatus,

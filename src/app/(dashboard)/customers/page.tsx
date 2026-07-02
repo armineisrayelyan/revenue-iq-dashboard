@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
-import { FeaturePage } from "@/components/dashboard/FeaturePage";
+import { CustomersManagement } from "@/components/customers/CustomersManagement";
+import { getCustomerCountries, getCustomers } from "@/services/customerService";
+import { getRecentPayments } from "@/services/paymentService";
 
 export const metadata: Metadata = {
   title: "Customers",
 };
 
 export default function CustomersPage() {
+  const customers = getCustomers();
+  const countries = getCustomerCountries();
+  const payments = getRecentPayments();
+
   return (
-    <FeaturePage
-      title="Customers"
-      description="Manage and analyze your customer base."
-      emptyTitle="No customer data yet"
-      emptyDescription="Customer profiles, segments, and lifecycle data will appear here."
+    <CustomersManagement
+      customers={customers}
+      countries={countries}
+      payments={payments}
     />
   );
 }

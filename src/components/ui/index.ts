@@ -56,6 +56,19 @@ export {
   TooltipContent,
   TooltipProvider,
 } from "@/components/ui/Tooltip";
+export {
+  Drawer,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerBody,
+} from "@/components/ui/Drawer";
+export { Pagination } from "@/components/ui/Pagination";
 export { Spinner, spinnerVariants } from "@/components/ui/Spinner";
 export { Skeleton, skeletonVariants } from "@/components/ui/Skeleton";
 export { Alert, AlertTitle, AlertDescription, alertVariants } from "@/components/ui/Alert";
