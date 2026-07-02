@@ -9,11 +9,9 @@ interface IPageHeaderProps {
 export function PageHeader({ title, description, className }: IPageHeaderProps) {
   return (
     <header className={cn("mb-8", className)}>
-      <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-        {title}
-      </h1>
+      <h1 className="text-heading text-foreground">{title}</h1>
       {description ? (
-        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+        <p className="mt-1 text-caption text-muted-foreground">{description}</p>
       ) : null}
     </header>
   );

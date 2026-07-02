@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { Card, CardContent } from "@/components/ui/Card";
 
 interface IEmptyStateProps {
   title: string;
@@ -8,17 +8,13 @@ interface IEmptyStateProps {
 
 export function EmptyState({ title, description, className }: IEmptyStateProps) {
   return (
-    <div
-      className={cn(
-        "flex flex-col items-center justify-center rounded-xl border border-dashed border-border",
-        "bg-card px-6 py-16 text-center",
-        className,
-      )}
-    >
-      <h2 className="text-lg font-medium text-foreground">{title}</h2>
-      <p className="mt-2 max-w-md text-sm text-muted-foreground">
-        {description}
-      </p>
-    </div>
+    <Card variant="outline" className={className}>
+      <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+        <h2 className="text-subheading text-foreground">{title}</h2>
+        <p className="mt-2 max-w-md text-caption text-muted-foreground">
+          {description}
+        </p>
+      </CardContent>
+    </Card>
   );
 }

@@ -1,16 +1,12 @@
+import Image from "next/image";
 import { cn } from "@/lib/cn";
+import { avatarVariants, type TAvatarVariants } from "@/lib/variants/avatar";
 
-interface IAvatarProps {
+interface IAvatarProps extends TAvatarVariants {
   name: string;
-  size?: "sm" | "md" | "lg";
+  src?: string;
   className?: string;
 }
-
-const sizeStyles = {
-  sm: "h-8 w-8 text-xs",
-  md: "h-9 w-9 text-sm",
-  lg: "h-10 w-10 text-base",
-};
 
 function getInitials(name: string): string {
   return name
@@ -21,17 +17,33 @@ function getInitials(name: string): string {
     .toUpperCase();
 }
 
-export function Avatar({ name, size = "md", className }: IAvatarProps) {
+export function Avatar({ name, src, size, className }: IAvatarProps) {
+  if (src) {
+    const dimension = size === "xs" ? 24 : size === "sm" ? 32 : size === "lg" ? 40 : size === "xl" ? 48 : 36;
+
+    return (
+      <Image
+        src={src}
+        alt={name}
+        width={dimension}
+        height={dimension}
+        className={cn(
+          avatarVariants({ size }),
+          "object-cover",
+          className,
+        )}
+      />
+    );
+  }
+
   return (
     <div
       aria-label={name}
-      className={cn(
-        "flex items-center justify-center rounded-full bg-primary font-medium text-primary-foreground ring-2 ring-border",
-        sizeStyles[size],
-        className,
-      )}
+      className={cn(avatarVariants({ size }), className)}
     >
       {getInitials(name)}
     </div>
   );
 }
+
+export { avatarVariants };
