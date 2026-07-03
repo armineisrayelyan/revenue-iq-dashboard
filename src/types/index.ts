@@ -27,3 +27,17 @@ export type {
 } from "@/types/dashboard";
 export type { IPayment } from "@/types/payment";
 export { EPaymentStatus } from "@/types/payment";
+export type {
+  IAnalyticsKpi,
+  IAnalyticsOverview,
+  IBusinessInsight,
+  ICountryRevenuePoint,
+  IDeviceUsagePoint,
+  IRetentionPoint,
+  IRevenueExpensePoint,
+  IRevenueTrendPoint,
+  ISignupPoint,
+  ISubscriptionDistributionPoint,
+  ITopCustomer,
+  TInsightTone,
+} from "@/types/analytics";

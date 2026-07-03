@@ -26,6 +26,12 @@ export const NAVIGATION_ITEMS: INavigationItem[] = [
     icon: "dollar-sign",
   },
   {
+    id: "analytics",
+    label: "Analytics",
+    href: "/analytics",
+    icon: "chart-no-axes-combined",
+  },
+  {
     id: "reports",
     label: "Reports",
     href: "/reports",

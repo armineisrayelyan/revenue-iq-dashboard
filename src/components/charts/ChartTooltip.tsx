@@ -10,13 +10,22 @@ interface IChartTooltipProps {
   label?: string;
   payload?: IChartTooltipPayload[];
   valueLabel?: string;
-  valueType?: "currency" | "number";
+  valueType?: "currency" | "number" | "percent";
 }
 
-function formatValue(value: number, valueType: "currency" | "number"): string {
-  return valueType === "currency"
-    ? formatCurrency(value)
-    : value.toLocaleString();
+function formatValue(
+  value: number,
+  valueType: "currency" | "number" | "percent",
+): string {
+  if (valueType === "currency") {
+    return formatCurrency(value);
+  }
+
+  if (valueType === "percent") {
+    return `${value}%`;
+  }
+
+  return value.toLocaleString();
 }
 
 export function ChartTooltip({

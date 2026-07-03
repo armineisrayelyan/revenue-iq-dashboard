@@ -1,0 +1,28 @@
+import {
+  ANALYTICS_CUSTOMER_RETENTION,
+  ANALYTICS_DEVICE_USAGE,
+  ANALYTICS_INSIGHTS,
+  ANALYTICS_KPIS,
+  ANALYTICS_MONTHLY_SIGNUPS,
+  ANALYTICS_REVENUE_BY_COUNTRY,
+  ANALYTICS_REVENUE_TREND,
+  ANALYTICS_REVENUE_VS_EXPENSES,
+  ANALYTICS_SUBSCRIPTION_DISTRIBUTION,
+  ANALYTICS_TOP_CUSTOMERS,
+} from "@/mock/analytics";
+import type { IAnalyticsOverview } from "@/types/analytics";
+
+export function getAnalyticsOverview(): IAnalyticsOverview {
+  return {
+    kpis: ANALYTICS_KPIS,
+    revenueTrend: ANALYTICS_REVENUE_TREND,
+    monthlySignups: ANALYTICS_MONTHLY_SIGNUPS,
+    revenueByCountry: ANALYTICS_REVENUE_BY_COUNTRY,
+    deviceUsage: ANALYTICS_DEVICE_USAGE,
+    subscriptionDistribution: ANALYTICS_SUBSCRIPTION_DISTRIBUTION,
+    customerRetention: ANALYTICS_CUSTOMER_RETENTION,
+    revenueVsExpenses: ANALYTICS_REVENUE_VS_EXPENSES,
+    insights: ANALYTICS_INSIGHTS,
+    topCustomers: ANALYTICS_TOP_CUSTOMERS,
+  };
+}

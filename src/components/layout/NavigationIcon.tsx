@@ -1,4 +1,5 @@
 import {
+  ChartNoAxesCombined,
   CreditCard,
   DollarSign,
   FileText,
@@ -25,6 +26,8 @@ export function NavigationIcon({ icon, className }: INavigationIconProps) {
       return <CreditCard className={className} aria-hidden="true" />;
     case "dollar-sign":
       return <DollarSign className={className} aria-hidden="true" />;
+    case "chart-no-axes-combined":
+      return <ChartNoAxesCombined className={className} aria-hidden="true" />;
     case "file-text":
       return <FileText className={className} aria-hidden="true" />;
     case "settings":

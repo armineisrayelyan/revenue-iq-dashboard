@@ -3,6 +3,7 @@ export type TNavigationIcon =
   | "users"
   | "credit-card"
   | "dollar-sign"
+  | "chart-no-axes-combined"
   | "file-text"
   | "settings";
 
