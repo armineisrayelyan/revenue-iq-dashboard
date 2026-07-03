@@ -1,0 +1,100 @@
+"use client";
+
+import { AnalyticsRevenueTrendChart } from "@/components/charts/AnalyticsRevenueTrendChart";
+import { StatCard } from "@/components/dashboard/StatCard";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/Drawer";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Table";
+import type {
+  IGeneratedReport,
+  IReportPreview,
+} from "@/types/report";
+
+interface IReportPreviewDrawerProps {
+  report: IGeneratedReport | null;
+  preview: IReportPreview;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function ReportPreviewDrawer({
+  report,
+  preview,
+  open,
+  onOpenChange,
+}: IReportPreviewDrawerProps) {
+  return (
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      <DrawerContent className="max-w-3xl">
+        {report ? (
+          <>
+            <DrawerHeader>
+              <DrawerTitle>{report.name}</DrawerTitle>
+              <DrawerDescription>
+                {report.type} report preview generated for business review.
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerBody className="space-y-6">
+              <section>
+                <h3 className="text-subheading text-foreground">Summary</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {preview.summary}
+                </p>
+              </section>
+
+              <section className="grid gap-3 sm:grid-cols-2">
+                {preview.metrics.map((metric) => (
+                  <StatCard key={metric.id} metric={metric} />
+                ))}
+              </section>
+
+              <section className="rounded-xl border border-border p-4">
+                <h3 className="text-subheading text-foreground">
+                  Revenue Snapshot
+                </h3>
+                <AnalyticsRevenueTrendChart data={preview.revenueTrend} />
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-subheading text-foreground">
+                  Table Preview
+                </h3>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Metric</TableHead>
+                      <TableHead>Value</TableHead>
+                      <TableHead>Change</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {preview.rows.map((row) => (
+                      <TableRow key={row.label}>
+                        <TableCell>{row.label}</TableCell>
+                        <TableCell>{row.value}</TableCell>
+                        <TableCell>{row.change}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </section>
+            </DrawerBody>
+          </>
+        ) : null}
+      </DrawerContent>
+    </Drawer>
+  );
+}

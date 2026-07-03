@@ -1,0 +1,161 @@
+import {
+  EReportStatus,
+  EReportType,
+} from "@/types/report";
+import {
+  ESubscriptionPlan,
+  ESubscriptionStatus,
+} from "@/types/subscription";
+import type {
+  IGeneratedReport,
+  IReportPreview,
+  IReportTemplate,
+} from "@/types/report";
+
+export const REPORT_TEMPLATES: IReportTemplate[] = [
+  {
+    id: "template_revenue",
+    type: EReportType.REVENUE,
+    title: "Revenue Report",
+    description: "MRR, ARR, expansion revenue, and plan contribution.",
+    lastGeneratedAt: "2026-07-01",
+    icon: "line-chart",
+  },
+  {
+    id: "template_customers",
+    type: EReportType.CUSTOMER,
+    title: "Customer Report",
+    description: "Customer growth, countries, account health, and ARPU.",
+    lastGeneratedAt: "2026-06-28",
+    icon: "users",
+  },
+  {
+    id: "template_subscriptions",
+    type: EReportType.SUBSCRIPTION,
+    title: "Subscription Report",
+    description: "Active subscriptions, renewal status, and billing cycles.",
+    lastGeneratedAt: "2026-06-25",
+    icon: "credit-card",
+  },
+  {
+    id: "template_payments",
+    type: EReportType.PAYMENTS,
+    title: "Payments Report",
+    description: "Recent payments, failed charges, refunds, and methods.",
+    lastGeneratedAt: "2026-06-23",
+    icon: "receipt",
+  },
+  {
+    id: "template_churn",
+    type: EReportType.CHURN,
+    title: "Churn Report",
+    description: "Cancelled subscriptions, churn drivers, and retention trend.",
+    lastGeneratedAt: "2026-06-20",
+    icon: "activity",
+  },
+];
+
+export const GENERATED_REPORTS: IGeneratedReport[] = [
+  {
+    id: "report_001",
+    name: "June Revenue Performance",
+    type: EReportType.REVENUE,
+    createdBy: "Armine",
+    createdAt: "2026-07-01",
+    status: EReportStatus.READY,
+    size: "2.4 MB",
+    dateRange: "last_30_days",
+    plan: ESubscriptionPlan.ENTERPRISE,
+    country: "United States",
+    subscriptionStatus: ESubscriptionStatus.ACTIVE,
+  },
+  {
+    id: "report_002",
+    name: "Customer Growth Summary",
+    type: EReportType.CUSTOMER,
+    createdBy: "Armine",
+    createdAt: "2026-06-28",
+    status: EReportStatus.READY,
+    size: "1.8 MB",
+    dateRange: "last_90_days",
+    plan: ESubscriptionPlan.PRO,
+    country: "Canada",
+    subscriptionStatus: ESubscriptionStatus.ACTIVE,
+  },
+  {
+    id: "report_003",
+    name: "Subscriptions Renewal Review",
+    type: EReportType.SUBSCRIPTION,
+    createdBy: "Revenue Ops",
+    createdAt: "2026-06-25",
+    status: EReportStatus.GENERATING,
+    size: "Processing",
+    dateRange: "last_30_days",
+    plan: ESubscriptionPlan.STARTER,
+    country: "Germany",
+    subscriptionStatus: ESubscriptionStatus.TRIAL,
+  },
+  {
+    id: "report_004",
+    name: "Payments Exceptions",
+    type: EReportType.PAYMENTS,
+    createdBy: "Finance",
+    createdAt: "2026-06-23",
+    status: EReportStatus.READY,
+    size: "936 KB",
+    dateRange: "last_7_days",
+    plan: ESubscriptionPlan.ENTERPRISE,
+    country: "United Kingdom",
+    subscriptionStatus: ESubscriptionStatus.PAST_DUE,
+  },
+  {
+    id: "report_005",
+    name: "Churn Risk Snapshot",
+    type: EReportType.CHURN,
+    createdBy: "Customer Success",
+    createdAt: "2026-06-20",
+    status: EReportStatus.FAILED,
+    size: "Failed",
+    dateRange: "last_90_days",
+    plan: ESubscriptionPlan.PRO,
+    country: "Australia",
+    subscriptionStatus: ESubscriptionStatus.CANCELLED,
+  },
+];
+
+export const REPORT_PREVIEW: IReportPreview = {
+  summary:
+    "Revenue remains ahead of plan with strong Enterprise contribution and improving churn. Payment health is stable, while Starter expansion requires follow-up.",
+  metrics: [
+    {
+      id: "preview_revenue",
+      label: "Revenue",
+      value: "$284.5K",
+      comparison: "last generated report",
+      growthPercentage: 14.2,
+      trend: "up",
+      icon: "dollar-sign",
+    },
+    {
+      id: "preview_customers",
+      label: "Customers",
+      value: "1,248",
+      comparison: "active customer base",
+      growthPercentage: 5.2,
+      trend: "up",
+      icon: "users",
+    },
+  ],
+  revenueTrend: [
+    { month: "Mar", revenue: 225000 },
+    { month: "Apr", revenue: 238000 },
+    { month: "May", revenue: 251000 },
+    { month: "Jun", revenue: 268000 },
+    { month: "Jul", revenue: 284500 },
+  ],
+  rows: [
+    { label: "Enterprise Revenue", value: "$176K", change: "+18%" },
+    { label: "Net Retention", value: "121%", change: "+4%" },
+    { label: "Failed Payments", value: "7", change: "-12%" },
+  ],
+};

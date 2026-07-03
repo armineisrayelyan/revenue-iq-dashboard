@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
-import { FeaturePage } from "@/components/dashboard/FeaturePage";
+import { ReportsCenter } from "@/components/reports/ReportsCenter";
+import {
+  getReportCountries,
+  getReportPlans,
+  getReportStatuses,
+  getReportsCenter,
+} from "@/services/reportService";
 
 export const metadata: Metadata = {
   title: "Reports",
 };
 
 export default function ReportsPage() {
+  const center = getReportsCenter();
+  const countries = getReportCountries();
+  const plans = getReportPlans();
+  const statuses = getReportStatuses();
+
   return (
-    <FeaturePage
-      title="Reports"
-      description="Generate and export revenue and customer reports."
-      emptyTitle="Reports not yet available"
-      emptyDescription="Custom report builder and scheduled exports will be added here."
+    <ReportsCenter
+      center={center}
+      countries={countries}
+      plans={plans}
+      statuses={statuses}
     />
   );
 }

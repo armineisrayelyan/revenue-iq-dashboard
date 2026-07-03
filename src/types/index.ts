@@ -41,3 +41,13 @@ export type {
   ITopCustomer,
   TInsightTone,
 } from "@/types/analytics";
+export type {
+  IGeneratedReport,
+  IReportFilters,
+  IReportPreview,
+  IReportPreviewRow,
+  IReportTemplate,
+  IReportsCenter,
+  TReportDateRange,
+} from "@/types/report";
+export { EExportFormat, EReportStatus, EReportType } from "@/types/report";
