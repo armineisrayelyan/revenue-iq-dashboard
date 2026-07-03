@@ -69,6 +69,7 @@ export {
   DrawerBody,
 } from "@/components/ui/Drawer";
 export { Pagination } from "@/components/ui/Pagination";
+export { SelectField, type ISelectOption } from "@/components/ui/SelectField";
 export { Spinner, spinnerVariants } from "@/components/ui/Spinner";
 export { Skeleton, skeletonVariants } from "@/components/ui/Skeleton";
 export { Alert, AlertTitle, AlertDescription, alertVariants } from "@/components/ui/Alert";

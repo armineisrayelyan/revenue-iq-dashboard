@@ -1,17 +1,34 @@
 import type { Metadata } from "next";
-import { FeaturePage } from "@/components/dashboard/FeaturePage";
+import { SubscriptionsManagement } from "@/components/subscriptions/SubscriptionsManagement";
+import { getRecentPayments } from "@/services/paymentService";
+import {
+  getPricingPlans,
+  getSubscriptionInvoices,
+  getSubscriptionMetrics,
+  getSubscriptions,
+  getUpcomingRenewals,
+} from "@/services/subscriptionService";
 
 export const metadata: Metadata = {
   title: "Subscriptions",
 };
 
 export default function SubscriptionsPage() {
+  const subscriptions = getSubscriptions();
+  const invoices = getSubscriptionInvoices();
+  const payments = getRecentPayments();
+  const pricingPlans = getPricingPlans();
+  const metrics = getSubscriptionMetrics(subscriptions);
+  const upcomingRenewals = getUpcomingRenewals(subscriptions);
+
   return (
-    <FeaturePage
-      title="Subscriptions"
-      description="Track active subscriptions, plans, and billing cycles."
-      emptyTitle="No subscriptions to display"
-      emptyDescription="Subscription management and billing details will be available here."
+    <SubscriptionsManagement
+      subscriptions={subscriptions}
+      invoices={invoices}
+      payments={payments}
+      metrics={metrics}
+      pricingPlans={pricingPlans}
+      upcomingRenewals={upcomingRenewals}
     />
   );
 }

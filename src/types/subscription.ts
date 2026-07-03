@@ -1,14 +1,19 @@
 export enum ESubscriptionStatus {
   ACTIVE = "active",
-  TRIALING = "trialing",
+  TRIAL = "trial",
   PAST_DUE = "past_due",
-  CANCELED = "canceled",
+  CANCELLED = "cancelled",
 }
 
 export enum ESubscriptionPlan {
-  STARTER = "starter",
-  PROFESSIONAL = "professional",
-  ENTERPRISE = "enterprise",
+  STARTER = "Starter",
+  PRO = "Pro",
+  ENTERPRISE = "Enterprise",
+}
+
+export enum EBillingCycle {
+  MONTHLY = "monthly",
+  YEARLY = "yearly",
 }
 
 export interface ISubscription {
@@ -17,8 +22,33 @@ export interface ISubscription {
   customerName: string;
   plan: ESubscriptionPlan;
   status: ESubscriptionStatus;
-  amount: number;
-  billingCycle: string;
+  billingCycle: EBillingCycle;
+  price: number;
   startDate: string;
   renewalDate: string;
+  createdAt: string;
+}
+
+export interface ISubscriptionInvoice {
+  id: string;
+  subscriptionId: string;
+  amount: number;
+  status: "paid" | "open" | "void";
+  issuedAt: string;
+}
+
+export interface IPricingPlan {
+  id: ESubscriptionPlan;
+  name: string;
+  monthlyPrice: number;
+  features: string[];
+  activeSubscribers: number;
+  revenueContribution: number;
+}
+
+export interface ISubscriptionFilters {
+  search: string;
+  plan: ESubscriptionPlan | "all";
+  billingCycle: EBillingCycle | "all";
+  status: ESubscriptionStatus | "all";
 }

@@ -2,30 +2,37 @@ import { Search, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { SelectField } from "@/components/ui/SelectField";
-import { ECustomerPlan, ECustomerStatus } from "@/types/customer";
-import type { ICustomerFilters } from "@/types/customer";
+import {
+  EBillingCycle,
+  ESubscriptionPlan,
+  ESubscriptionStatus,
+} from "@/types/subscription";
+import type { ISubscriptionFilters } from "@/types/subscription";
 
-interface ICustomerFiltersProps {
-  filters: ICustomerFilters;
-  countries: string[];
-  plans: ECustomerPlan[];
-  statuses: ECustomerStatus[];
-  onChange: (filters: Partial<ICustomerFilters>) => void;
+interface ISubscriptionFiltersProps {
+  filters: ISubscriptionFilters;
+  plans: ESubscriptionPlan[];
+  billingCycles: EBillingCycle[];
+  statuses: ESubscriptionStatus[];
+  onChange: (filters: Partial<ISubscriptionFilters>) => void;
   onReset: () => void;
 }
 
-function formatStatus(status: string): string {
-  return status.charAt(0).toUpperCase() + status.slice(1);
+function formatLabel(value: string): string {
+  return value
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
-export function CustomerFilters({
+export function SubscriptionFilters({
   filters,
-  countries,
   plans,
+  billingCycles,
   statuses,
   onChange,
   onReset,
-}: ICustomerFiltersProps) {
+}: ISubscriptionFiltersProps) {
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
       <div className="grid gap-3 lg:grid-cols-[minmax(240px,1fr)_auto] lg:items-end">
@@ -36,8 +43,8 @@ export function CustomerFilters({
           />
           <Input
             label="Search"
-            name="customer-search"
-            placeholder="Search by name, email, or company"
+            name="subscription-search"
+            placeholder="Search by customer or plan"
             value={filters.search}
             className="pl-9"
             onChange={(event) => onChange({ search: event.target.value })}
@@ -52,7 +59,23 @@ export function CustomerFilters({
               { label: "All", value: "all" },
               ...plans.map((plan) => ({ label: plan, value: plan })),
             ]}
-            onChange={(plan) => onChange({ plan: plan as ECustomerPlan | "all" })}
+            onChange={(plan) =>
+              onChange({ plan: plan as ESubscriptionPlan | "all" })
+            }
+          />
+          <SelectField
+            label="Billing"
+            value={filters.billingCycle}
+            options={[
+              { label: "All", value: "all" },
+              ...billingCycles.map((cycle) => ({
+                label: formatLabel(cycle),
+                value: cycle,
+              })),
+            ]}
+            onChange={(billingCycle) =>
+              onChange({ billingCycle: billingCycle as EBillingCycle | "all" })
+            }
           />
           <SelectField
             label="Status"
@@ -60,22 +83,13 @@ export function CustomerFilters({
             options={[
               { label: "All", value: "all" },
               ...statuses.map((status) => ({
-                label: formatStatus(status),
+                label: formatLabel(status),
                 value: status,
               })),
             ]}
             onChange={(status) =>
-              onChange({ status: status as ECustomerStatus | "all" })
+              onChange({ status: status as ESubscriptionStatus | "all" })
             }
-          />
-          <SelectField
-            label="Country"
-            value={filters.country}
-            options={[
-              { label: "All", value: "all" },
-              ...countries.map((country) => ({ label: country, value: country })),
-            ]}
-            onChange={(country) => onChange({ country })}
           />
           <Button variant="outline" size="md" onClick={onReset}>
             <X className="h-4 w-4" aria-hidden="true" />
