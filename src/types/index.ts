@@ -51,3 +51,14 @@ export type {
   TReportDateRange,
 } from "@/types/report";
 export { EExportFormat, EReportStatus, EReportType } from "@/types/report";
+export type {
+  IBillingSettings,
+  INotificationSettings,
+  IOrganizationSettings,
+  IProfileSettings,
+  ISecuritySession,
+  ISecuritySettings,
+  ISettingsData,
+  TSettingsTab,
+  TThemePreference,
+} from "@/types/settings";

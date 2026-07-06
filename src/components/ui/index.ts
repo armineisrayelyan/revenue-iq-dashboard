@@ -1,5 +1,7 @@
 export { Button, buttonVariants } from "@/components/ui/Button";
 export { Input, inputVariants } from "@/components/ui/Input";
+export { Textarea } from "@/components/ui/Textarea";
+export { Switch } from "@/components/ui/Switch";
 export { Avatar, avatarVariants } from "@/components/ui/Avatar";
 export { Badge, badgeVariants } from "@/components/ui/Badge";
 export {

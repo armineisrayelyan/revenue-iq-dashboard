@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { FeaturePage } from "@/components/dashboard/FeaturePage";
+import { SettingsExperience } from "@/components/settings/SettingsExperience";
+import { getSettingsData } from "@/services/settingsService";
 
 export const metadata: Metadata = {
   title: "Settings",
 };
 
 export default function SettingsPage() {
-  return (
-    <FeaturePage
-      title="Settings"
-      description="Configure your account, team, and application preferences."
-      emptyTitle="Settings panel coming soon"
-      emptyDescription="Account settings, integrations, and team management will live here."
-    />
-  );
+  const settings = getSettingsData();
+
+  return <SettingsExperience settings={settings} />;
 }
