@@ -5,6 +5,7 @@ import type { TSettingsTab } from "@/types/settings";
 
 interface ISettingsTabsProps {
   activeTab: TSettingsTab;
+  showBilling: boolean;
   onTabChange: (tab: TSettingsTab) => void;
 }
 
@@ -17,13 +18,21 @@ const SETTINGS_TABS: { id: TSettingsTab; label: string }[] = [
   { id: "billing", label: "Billing" },
 ];
 
-export function SettingsTabs({ activeTab, onTabChange }: ISettingsTabsProps) {
+export function SettingsTabs({
+  activeTab,
+  showBilling,
+  onTabChange,
+}: ISettingsTabsProps) {
+  const tabs = showBilling
+    ? SETTINGS_TABS
+    : SETTINGS_TABS.filter((tab) => tab.id !== "billing");
+
   return (
     <nav
       aria-label="Settings sections"
       className="flex gap-1 overflow-x-auto rounded-xl border border-border bg-card p-1"
     >
-      {SETTINGS_TABS.map((tab) => (
+      {tabs.map((tab) => (
         <button
           key={tab.id}
           type="button"

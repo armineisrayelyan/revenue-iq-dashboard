@@ -62,3 +62,5 @@ export type {
   TSettingsTab,
   TThemePreference,
 } from "@/types/settings";
+export type { IAuthSession, IAuthUser, ILoginCredentials } from "@/types/auth";
+export { EUserRole } from "@/types/auth";

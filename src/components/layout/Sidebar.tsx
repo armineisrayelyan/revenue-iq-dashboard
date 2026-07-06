@@ -5,6 +5,8 @@ import { NAVIGATION_ITEMS, APP_NAME } from "@/constants/navigation";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
 import { SidebarNavItem } from "@/components/layout/SidebarNavItem";
+import { useAuth } from "@/hooks/useAuth";
+import { canAccessNavigationItem } from "@/services/authService";
 
 interface ISidebarProps {
   collapsed: boolean;
@@ -19,6 +21,13 @@ export function Sidebar({
   onToggleCollapse,
   onCloseMobile,
 }: ISidebarProps) {
+  const { user } = useAuth();
+  const navigationItems = user
+    ? NAVIGATION_ITEMS.filter((item) =>
+        canAccessNavigationItem(user.role, item.allowedRoles),
+      )
+    : [];
+
   return (
     <>
       {mobileOpen ? (
@@ -75,7 +84,7 @@ export function Sidebar({
           aria-label="Main navigation"
           className="flex-1 space-y-1 overflow-y-auto p-3"
         >
-          {NAVIGATION_ITEMS.map((item) => (
+          {navigationItems.map((item) => (
             <SidebarNavItem
               key={item.id}
               item={item}

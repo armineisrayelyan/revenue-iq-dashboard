@@ -1,3 +1,5 @@
+import type { EUserRole } from "@/types/auth";
+
 export type TNavigationIcon =
   | "layout-dashboard"
   | "users"
@@ -12,4 +14,5 @@ export interface INavigationItem {
   label: string;
   href: string;
   icon: TNavigationIcon;
+  allowedRoles: EUserRole[];
 }

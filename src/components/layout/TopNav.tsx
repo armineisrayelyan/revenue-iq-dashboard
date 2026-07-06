@@ -1,14 +1,17 @@
 "use client";
 
 import { Bell, ChevronDown, LogOut, Menu, Search, Settings, User } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { MOCK_NOTIFICATIONS, MOCK_USER } from "@/constants/mock-data";
+import { MOCK_NOTIFICATIONS } from "@/constants/mock-data";
 import { cn } from "@/lib/cn";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { useAuth } from "@/hooks/useAuth";
 import { ENotificationType } from "@/types/notification";
 
 interface ITopNavProps {
@@ -26,12 +29,19 @@ const notificationVariantMap: Record<
 };
 
 export function TopNav({ onOpenMobileSidebar }: ITopNavProps) {
+  const { user, logout } = useAuth();
+  const router = useRouter();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const notificationsRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const unreadCount = MOCK_NOTIFICATIONS.filter((n) => !n.read).length;
+
+  function handleLogout() {
+    logout();
+    router.replace("/login");
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -149,9 +159,9 @@ export function TopNav({ onOpenMobileSidebar }: ITopNavProps) {
               setNotificationsOpen(false);
             }}
           >
-            <Avatar name={MOCK_USER.name} size="sm" />
+            <Avatar name={user?.fullName ?? "User"} src={user?.avatar || undefined} size="sm" />
             <span className="hidden text-sm font-medium text-foreground md:block">
-              {MOCK_USER.name}
+              {user?.fullName}
             </span>
             <ChevronDown className="hidden h-4 w-4 text-muted-foreground md:block" />
           </button>
@@ -164,32 +174,36 @@ export function TopNav({ onOpenMobileSidebar }: ITopNavProps) {
             >
               <div className="border-b border-border px-3 py-2">
                 <p className="text-sm font-medium text-foreground">
-                  {MOCK_USER.name}
+                  {user?.fullName}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {MOCK_USER.email}
+                  {user?.email}
+                </p>
+                <p className="mt-1 text-xs font-medium text-primary">
+                  {user?.role}
                 </p>
               </div>
-              <button
-                type="button"
+              <Link
+                href="/settings"
                 role="menuitem"
                 className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-foreground hover:bg-accent"
               >
                 <User className="h-4 w-4" />
                 Profile
-              </button>
-              <button
-                type="button"
+              </Link>
+              <Link
+                href="/settings"
                 role="menuitem"
                 className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-foreground hover:bg-accent"
               >
                 <Settings className="h-4 w-4" />
                 Settings
-              </button>
+              </Link>
               <button
                 type="button"
                 role="menuitem"
                 className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-destructive hover:bg-accent"
+                onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4" />
                 Sign out

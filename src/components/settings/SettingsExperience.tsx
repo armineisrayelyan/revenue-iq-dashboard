@@ -9,7 +9,9 @@ import { SecuritySettingsTab } from "@/components/settings/SecuritySettingsTab";
 import { SettingsHeader } from "@/components/settings/SettingsHeader";
 import { SettingsTabs } from "@/components/settings/SettingsTabs";
 import { SettingsToast } from "@/components/settings/SettingsToast";
+import { useAuth } from "@/hooks/useAuth";
 import { useSettingsExperience } from "@/hooks/useSettingsExperience";
+import { canAccessBilling } from "@/services/authService";
 import type { ISettingsData } from "@/types/settings";
 
 interface ISettingsExperienceProps {
@@ -17,13 +19,16 @@ interface ISettingsExperienceProps {
 }
 
 export function SettingsExperience({ settings }: ISettingsExperienceProps) {
+  const { user } = useAuth();
   const state = useSettingsExperience(settings);
+  const showBilling = user ? canAccessBilling(user.role) : false;
 
   return (
     <div className="space-y-6">
       <SettingsHeader />
       <SettingsTabs
         activeTab={state.activeTab}
+        showBilling={showBilling}
         onTabChange={state.setActiveTab}
       />
 
@@ -67,7 +72,7 @@ export function SettingsExperience({ settings }: ISettingsExperienceProps) {
         />
       ) : null}
 
-      {state.activeTab === "billing" ? (
+      {state.activeTab === "billing" && showBilling ? (
         <BillingSettingsTab billing={settings.billing} />
       ) : null}
 
