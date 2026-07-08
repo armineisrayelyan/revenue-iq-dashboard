@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RevenueIQ – SaaS Analytics Dashboard
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![React](https://img.shields.io/badge/React-19-61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-First, run the development server:
+RevenueIQ is a modern SaaS analytics dashboard built with Next.js and TypeScript.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+It demonstrates enterprise-level frontend architecture, reusable components, responsive design, authentication, analytics dashboards, customer management, reporting, and subscription management.
+
+## 🌐 Live Demo
+
+https://revenue-iq-dashboard.vercel.app/
+
+---
+
+## ✨ Features
+
+- Dashboard Overview
+- Customer Management
+- Subscription Management
+- Revenue Analytics
+- Reports Center
+- Authentication
+- User Roles
+- Settings
+- Responsive Design
+- Dark / Light Theme
+- Charts & Analytics
+- Tables with Search & Pagination
+- Mock API Architecture
+
+---
+
+## 🛠 Tech Stack
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- React Hook Form
+- Zod
+- Recharts
+- TanStack Table
+- TanStack Query
+- Framer Motion
+- Lucide Icons
+
+---
+
+## 📁 Folder Structure
+
+```text
+src/
+ ├── app/
+ ├── components/
+ ├── hooks/
+ ├── services/
+ ├── mock/
+ ├── types/
+ ├── utils/
+ └── lib/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/armineisrayelyan/revenue-iq-dashboard.git
 
-## Learn More
+cd revenue-iq-dashboard
 
-To learn more about Next.js, take a look at the following resources:
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 💡 Key Highlights
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Feature-based architecture
+- Reusable UI components
+- Responsive layouts
+- Enterprise dashboard patterns
+- Type-safe development
+- Mock service layer
+- Accessible UI
+- Production-ready structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📷 Screenshots
+
+> Add screenshots here after capturing them.
+image.png
+image.png
+image.png
+image.png
+image.png
+image.png
+image.png
+image.png
+
+---
+
+## 🔮 Future Improvements
+
+- Backend integration
+- Real authentication
+- API data
+- Email notifications
+- Team collaboration
+- Advanced reporting
+- Export to PDF/CSV
+
+---
+
+## 👩‍💻 Author
+
+**Armine Israyelyan**
+
+Frontend Developer
+
+GitHub:
+https://github.com/armineisrayelyan

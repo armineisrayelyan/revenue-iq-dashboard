@@ -9,6 +9,11 @@ import {
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/Badge";
 import {
+  MobileDataCard,
+  MobileDataGrid,
+  MobileDataRow,
+} from "@/components/ui/MobileDataCard";
+import {
   Table,
   TableBody,
   TableCell,
@@ -71,34 +76,70 @@ export function TopCustomersTable({ customers }: ITopCustomersTableProps) {
   });
 
   return (
-    <Table>
-      <TableHeader>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <TableHead key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-              </TableHead>
+    <>
+      <div className="hidden md:block">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
             ))}
-          </TableRow>
-        ))}
-      </TableHeader>
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <TableCell key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
             ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+          </TableBody>
+        </Table>
+      </div>
+
+      <div className="space-y-3 md:hidden">
+        {table.getRowModel().rows.map((row) => {
+          const customer = row.original;
+          return (
+            <MobileDataCard key={customer.customer}>
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-foreground">
+                    {customer.customer}
+                  </p>
+                  <p className="mt-1 text-caption text-muted-foreground">
+                    Last payment {formatDate(customer.lastPayment)}
+                  </p>
+                </div>
+                <Badge variant="success">+{customer.growth}%</Badge>
+              </div>
+
+              <MobileDataGrid>
+                <MobileDataRow
+                  label="Plan"
+                  value={<Badge variant="outline">{customer.plan}</Badge>}
+                />
+                <MobileDataRow
+                  label="Revenue"
+                  value={formatCurrency(customer.revenue)}
+                />
+              </MobileDataGrid>
+            </MobileDataCard>
+          );
+        })}
+      </div>
+    </>
   );
 }

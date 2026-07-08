@@ -10,6 +10,11 @@ import { useMemo } from "react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import {
+  MobileDataCard,
+  MobileDataGrid,
+  MobileDataRow,
+} from "@/components/ui/MobileDataCard";
+import {
   Table,
   TableBody,
   TableCell,
@@ -99,34 +104,75 @@ export function RecentTransactionsTable({
   });
 
   return (
-    <Table>
-      <TableHeader>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <TableHead key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-              </TableHead>
+    <>
+      <div className="hidden md:block">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
             ))}
-          </TableRow>
-        ))}
-      </TableHeader>
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <TableCell key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
             ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+          </TableBody>
+        </Table>
+      </div>
+
+      <div className="space-y-3 md:hidden">
+        {table.getRowModel().rows.map((row) => {
+          const payment = row.original;
+          return (
+            <MobileDataCard key={payment.id}>
+              <div className="flex items-start gap-3">
+                <Avatar name={payment.customerName} size="sm" />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-foreground">
+                    {payment.customerName}
+                  </p>
+                  <p className="truncate text-caption text-muted-foreground">
+                    {payment.customerEmail}
+                  </p>
+                </div>
+                <Badge variant={getStatusVariant(payment.status)}>
+                  {payment.status}
+                </Badge>
+              </div>
+
+              <MobileDataGrid>
+                <MobileDataRow label="Plan" value={payment.plan} />
+                <MobileDataRow
+                  label="Amount"
+                  value={formatCurrency(payment.amount)}
+                />
+                <MobileDataRow
+                  label="Date"
+                  value={formatDate(payment.paidAt)}
+                  className="col-span-2"
+                />
+              </MobileDataGrid>
+            </MobileDataCard>
+          );
+        })}
+      </div>
+    </>
   );
 }
