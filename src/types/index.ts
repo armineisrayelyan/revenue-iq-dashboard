@@ -64,3 +64,4 @@ export type {
 } from "@/types/settings";
 export type { IAuthSession, IAuthUser, ILoginCredentials } from "@/types/auth";
 export { EUserRole } from "@/types/auth";
+export type { ISearchResult, TSearchResultType } from "@/types/search";

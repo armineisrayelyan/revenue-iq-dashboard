@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { EmptyState } from "@/components/ui/EmptyState";
+import { TableEmptyState } from "@/components/ui/EmptyStates";
 import { Pagination } from "@/components/ui/Pagination";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { RecentPaymentsTable } from "@/components/tables/RecentPaymentsTable";
@@ -108,10 +108,7 @@ export function SubscriptionsManagement({
               />
             </>
           ) : (
-            <EmptyState
-              title="No subscriptions found"
-              description="Try adjusting search or filters to find matching subscriptions."
-            />
+            <TableEmptyState />
           )}
         </CardContent>
       </Card>

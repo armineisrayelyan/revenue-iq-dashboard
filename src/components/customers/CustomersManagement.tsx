@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { EmptyState } from "@/components/ui/EmptyState";
+import { CustomersEmptyState } from "@/components/ui/EmptyStates";
 import { Pagination } from "@/components/ui/Pagination";
 import { CustomerDetailsDrawer } from "@/components/customers/CustomerDetailsDrawer";
 import { CustomerFilters } from "@/components/customers/CustomerFilters";
@@ -84,10 +84,7 @@ export function CustomersManagement({
               />
             </>
           ) : (
-            <EmptyState
-              title="No customers found"
-              description="Try adjusting your search or filters to find matching customers."
-            />
+            <CustomersEmptyState />
           )}
         </CardContent>
       </Card>

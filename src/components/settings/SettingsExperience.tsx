@@ -8,7 +8,6 @@ import { ProfileSettingsTab } from "@/components/settings/ProfileSettingsTab";
 import { SecuritySettingsTab } from "@/components/settings/SecuritySettingsTab";
 import { SettingsHeader } from "@/components/settings/SettingsHeader";
 import { SettingsTabs } from "@/components/settings/SettingsTabs";
-import { SettingsToast } from "@/components/settings/SettingsToast";
 import { useAuth } from "@/hooks/useAuth";
 import { useSettingsExperience } from "@/hooks/useSettingsExperience";
 import { canAccessBilling } from "@/services/authService";
@@ -76,7 +75,6 @@ export function SettingsExperience({ settings }: ISettingsExperienceProps) {
         <BillingSettingsTab billing={settings.billing} />
       ) : null}
 
-      <SettingsToast message={state.successMessage} />
     </div>
   );
 }

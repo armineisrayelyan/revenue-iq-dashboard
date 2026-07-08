@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { EmptyState } from "@/components/ui/EmptyState";
+import { ReportsEmptyState } from "@/components/ui/EmptyStates";
 import { ExportOptions } from "@/components/reports/ExportOptions";
 import { GeneratedReportsTable } from "@/components/reports/GeneratedReportsTable";
 import { ReportPreviewDrawer } from "@/components/reports/ReportPreviewDrawer";
@@ -72,10 +72,7 @@ export function ReportsCenter({
                 onView={setSelectedReport}
               />
             ) : (
-              <EmptyState
-                title="No reports found"
-                description="Adjust filters or generate a new report to populate this center."
-              />
+              <ReportsEmptyState />
             )}
           </CardContent>
         </Card>

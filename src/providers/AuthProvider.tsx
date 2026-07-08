@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useMemo, useState } from "react";
+import { createContext, useMemo, useSyncExternalStore } from "react";
 import {
   clearAuthSession,
   getStoredAuthSession,
@@ -19,29 +19,60 @@ interface IAuthContextValue {
 
 export const AuthContext = createContext<IAuthContextValue | null>(null);
 
+const AUTH_SESSION_EVENT = "revenueiq-auth-session-change";
+
 interface IAuthProviderProps {
   children: React.ReactNode;
 }
 
-export function AuthProvider({ children }: IAuthProviderProps) {
-  const [session, setSession] = useState<IAuthSession | null>(() => {
-    if (typeof window === "undefined") {
-      return null;
-    }
+function subscribeToAuthSession(onStoreChange: () => void): () => void {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(AUTH_SESSION_EVENT, onStoreChange);
 
-    return getStoredAuthSession();
-  });
-  const loading = false;
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(AUTH_SESSION_EVENT, onStoreChange);
+  };
+}
+
+function getServerSessionSnapshot(): IAuthSession | null {
+  return null;
+}
+
+function getHydratedSnapshot(): boolean {
+  return true;
+}
+
+function getServerHydratedSnapshot(): boolean {
+  return false;
+}
+
+function notifyAuthSessionChange() {
+  window.dispatchEvent(new Event(AUTH_SESSION_EVENT));
+}
+
+export function AuthProvider({ children }: IAuthProviderProps) {
+  const session = useSyncExternalStore(
+    subscribeToAuthSession,
+    getStoredAuthSession,
+    getServerSessionSnapshot,
+  );
+  const hydrated = useSyncExternalStore(
+    () => () => undefined,
+    getHydratedSnapshot,
+    getServerHydratedSnapshot,
+  );
+  const loading = !hydrated;
 
   async function login(credentials: ILoginCredentials): Promise<void> {
     const nextSession = loginWithMockCredentials(credentials);
     saveAuthSession(nextSession);
-    setSession(nextSession);
+    notifyAuthSessionChange();
   }
 
   function logout() {
     clearAuthSession();
-    setSession(null);
+    notifyAuthSessionChange();
   }
 
   const value = useMemo<IAuthContextValue>(

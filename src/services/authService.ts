@@ -3,6 +3,8 @@ import { EUserRole } from "@/types/auth";
 import type { IAuthSession, IAuthUser, ILoginCredentials } from "@/types/auth";
 
 const AUTH_STORAGE_KEY = "revenueiq.auth.session";
+let cachedSessionRaw: string | null | undefined;
+let cachedSessionSnapshot: IAuthSession | null = null;
 
 function createToken(userId: string): string {
   return `mock-token-${userId}-${Date.now()}`;
@@ -39,25 +41,40 @@ export function loginWithMockCredentials(
 }
 
 export function saveAuthSession(session: IAuthSession): void {
-  window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
+  const rawSession = JSON.stringify(session);
+  cachedSessionRaw = rawSession;
+  cachedSessionSnapshot = session;
+  window.localStorage.setItem(AUTH_STORAGE_KEY, rawSession);
 }
 
 export function getStoredAuthSession(): IAuthSession | null {
   const storedSession = window.localStorage.getItem(AUTH_STORAGE_KEY);
 
+  if (storedSession === cachedSessionRaw) {
+    return cachedSessionSnapshot;
+  }
+
+  cachedSessionRaw = storedSession;
+
   if (!storedSession) {
+    cachedSessionSnapshot = null;
     return null;
   }
 
   try {
-    return JSON.parse(storedSession) as IAuthSession;
+    cachedSessionSnapshot = JSON.parse(storedSession) as IAuthSession;
+    return cachedSessionSnapshot;
   } catch {
     window.localStorage.removeItem(AUTH_STORAGE_KEY);
+    cachedSessionRaw = null;
+    cachedSessionSnapshot = null;
     return null;
   }
 }
 
 export function clearAuthSession(): void {
+  cachedSessionRaw = null;
+  cachedSessionSnapshot = null;
   window.localStorage.removeItem(AUTH_STORAGE_KEY);
 }
 

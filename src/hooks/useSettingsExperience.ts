@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/components/ui/Toast";
 import {
   organizationSettingsSchema,
   profileSettingsSchema,
@@ -19,9 +20,9 @@ import type {
 
 export function useSettingsExperience(settings: ISettingsData) {
   const { setTheme, theme } = useTheme();
+  const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState<TSettingsTab>("profile");
   const [savingSection, setSavingSection] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [notifications, setNotifications] =
     useState<INotificationSettings>(settings.notifications);
 
@@ -35,16 +36,11 @@ export function useSettingsExperience(settings: ISettingsData) {
     defaultValues: settings.organization,
   });
 
-  function showSuccess(message: string) {
-    setSuccessMessage(message);
-    window.setTimeout(() => setSuccessMessage(null), 2400);
-  }
-
   function simulateSave(section: string, message: string) {
     setSavingSection(section);
     window.setTimeout(() => {
       setSavingSection(null);
-      showSuccess(message);
+      showToast(message, "success");
     }, 600);
   }
 
@@ -72,7 +68,6 @@ export function useSettingsExperience(settings: ISettingsData) {
   return {
     activeTab,
     savingSection,
-    successMessage,
     profileForm,
     organizationForm,
     notifications,
