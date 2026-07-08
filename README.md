@@ -95,15 +95,26 @@ npm run dev
 
 ## 📷 Screenshots
 
-> Add screenshots here after capturing them.
-image.png
-image.png
-image.png
-image.png
-image.png
-image.png
-image.png
-image.png
+### Dashboard
+
+![Dashboard](public/screenshots/dashboard.png)
+
+### Customers
+
+![Customers](public/screenshots/customers.png)
+
+### Analytics
+
+![Analytics](public/screenshots/analytics.png)
+
+### Reports
+
+![Reports](public/screenshots/reports.png)
+
+
+### Mobile
+
+![Mobile](public/screenshots/mobile_view.png)
 
 ---
 
