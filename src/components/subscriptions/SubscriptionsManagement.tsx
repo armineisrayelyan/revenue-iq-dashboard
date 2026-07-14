@@ -1,6 +1,10 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import {
+  EmptyDashboardSection,
+  EmptyTableState,
+} from "@/components/ui/EmptySections";
 import { TableEmptyState } from "@/components/ui/EmptyStates";
 import { Pagination } from "@/components/ui/Pagination";
 import { StatCard } from "@/components/dashboard/StatCard";
@@ -57,19 +61,28 @@ export function SubscriptionsManagement({
   } = useSubscriptionManagement(subscriptions, invoices, payments);
 
   const hasSubscriptions = paginatedSubscriptions.length > 0;
+  const hasMetrics = metrics.length > 0;
+  const hasPricingPlans = pricingPlans.length > 0;
+  const hasUpcomingRenewals = upcomingRenewals.length > 0;
+  const recentPayments = payments.slice(0, 6);
+  const hasRecentPayments = recentPayments.length > 0;
 
   return (
     <div className="space-y-6">
       <SubscriptionsHeader />
 
-      <section
-        aria-label="Subscription metrics"
-        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-      >
-        {metrics.map((metric) => (
-          <StatCard key={metric.id} metric={metric} />
-        ))}
-      </section>
+      {hasMetrics ? (
+        <section
+          aria-label="Subscription metrics"
+          className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        >
+          {metrics.map((metric) => (
+            <StatCard key={metric.id} metric={metric} />
+          ))}
+        </section>
+      ) : (
+        <EmptyDashboardSection />
+      )}
 
       <SubscriptionFilters
         filters={filters}
@@ -113,10 +126,30 @@ export function SubscriptionsManagement({
         </CardContent>
       </Card>
 
-      <PricingPlansGrid plans={pricingPlans} />
+      {hasPricingPlans ? (
+        <PricingPlansGrid plans={pricingPlans} />
+      ) : (
+        <EmptyDashboardSection />
+      )}
 
       <section className="grid gap-4 xl:grid-cols-[minmax(320px,0.75fr)_minmax(0,1.25fr)]">
-        <UpcomingRenewals subscriptions={upcomingRenewals} />
+        {hasUpcomingRenewals ? (
+          <UpcomingRenewals subscriptions={upcomingRenewals} />
+        ) : (
+          <Card>
+            <CardHeader>
+              <CardTitle>Upcoming Renewals</CardTitle>
+              <p className="text-caption text-muted-foreground">
+                Subscriptions renewing in the next 30 days.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <p className="rounded-lg border border-dashed border-border p-4 text-caption text-muted-foreground">
+                No renewals are due in the next 30 days.
+              </p>
+            </CardContent>
+          </Card>
+        )}
         <Card>
           <CardHeader>
             <CardTitle>Recent Payments</CardTitle>
@@ -125,7 +158,11 @@ export function SubscriptionsManagement({
             </p>
           </CardHeader>
           <CardContent>
-            <RecentPaymentsTable payments={payments.slice(0, 6)} />
+            {hasRecentPayments ? (
+              <RecentPaymentsTable payments={recentPayments} />
+            ) : (
+              <EmptyTableState />
+            )}
           </CardContent>
         </Card>
       </section>

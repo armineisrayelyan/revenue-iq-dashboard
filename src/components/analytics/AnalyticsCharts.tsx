@@ -1,7 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { ReactNode } from "react";
 import { ChartCard } from "@/components/dashboard/ChartCard";
+import { EmptyChartState } from "@/components/ui/EmptySections";
 import { Skeleton } from "@/components/ui/Skeleton";
 import type {
   ICountryRevenuePoint,
@@ -15,6 +17,10 @@ import type {
 
 function ChartSkeleton() {
   return <Skeleton className="h-[280px] w-full" />;
+}
+
+function renderChart(hasData: boolean, chart: ReactNode) {
+  return hasData ? chart : <EmptyChartState />;
 }
 
 const RevenueTrend = dynamic(() =>
@@ -70,32 +76,80 @@ interface IAnalyticsChartsProps {
   revenueVsExpenses: IRevenueExpensePoint[];
 }
 
+interface IChartSection {
+  id: string;
+  title: string;
+  description: string;
+  hasData: boolean;
+  content: ReactNode;
+  className?: string;
+}
+
 export function AnalyticsCharts(props: IAnalyticsChartsProps) {
+  const chartSections: IChartSection[] = [
+    {
+      id: "revenue-trend",
+      title: "Revenue Trend",
+      description: "Recurring revenue over time.",
+      hasData: props.revenueTrend.length > 0,
+      content: <RevenueTrend data={props.revenueTrend} />,
+    },
+    {
+      id: "monthly-signups",
+      title: "Monthly Signups",
+      description: "New accounts created monthly.",
+      hasData: props.monthlySignups.length > 0,
+      content: <MonthlySignups data={props.monthlySignups} />,
+    },
+    {
+      id: "revenue-by-country",
+      title: "Revenue by Country",
+      description: "Top markets by revenue.",
+      hasData: props.revenueByCountry.length > 0,
+      content: <RevenueByCountry data={props.revenueByCountry} />,
+    },
+    {
+      id: "device-usage",
+      title: "Device Usage",
+      description: "Traffic mix by device type.",
+      hasData: props.deviceUsage.length > 0,
+      content: <DeviceUsage data={props.deviceUsage} />,
+    },
+    {
+      id: "subscription-distribution",
+      title: "Subscription Distribution",
+      description: "Subscriber mix by plan.",
+      hasData: props.subscriptionDistribution.length > 0,
+      content: (
+        <SubscriptionDistribution data={props.subscriptionDistribution} />
+      ),
+    },
+    {
+      id: "customer-retention",
+      title: "Customer Retention",
+      description: "Retention trend by month.",
+      hasData: props.customerRetention.length > 0,
+      content: <CustomerRetention data={props.customerRetention} />,
+    },
+    {
+      id: "revenue-vs-expenses",
+      title: "Revenue vs Expenses",
+      description: "Revenue, expenses, and profit.",
+      hasData: props.revenueVsExpenses.length > 0,
+      content: <RevenueVsExpenses data={props.revenueVsExpenses} />,
+      className: "xl:col-span-2",
+    },
+  ];
+
   return (
     <section className="grid gap-4 xl:grid-cols-2">
-      <ChartCard title="Revenue Trend" description="Recurring revenue over time.">
-        <RevenueTrend data={props.revenueTrend} />
-      </ChartCard>
-      <ChartCard title="Monthly Signups" description="New accounts created monthly.">
-        <MonthlySignups data={props.monthlySignups} />
-      </ChartCard>
-      <ChartCard title="Revenue by Country" description="Top markets by revenue.">
-        <RevenueByCountry data={props.revenueByCountry} />
-      </ChartCard>
-      <ChartCard title="Device Usage" description="Traffic mix by device type.">
-        <DeviceUsage data={props.deviceUsage} />
-      </ChartCard>
-      <ChartCard title="Subscription Distribution" description="Subscriber mix by plan.">
-        <SubscriptionDistribution data={props.subscriptionDistribution} />
-      </ChartCard>
-      <ChartCard title="Customer Retention" description="Retention trend by month.">
-        <CustomerRetention data={props.customerRetention} />
-      </ChartCard>
-      <div className="xl:col-span-2">
-        <ChartCard title="Revenue vs Expenses" description="Revenue, expenses, and profit.">
-          <RevenueVsExpenses data={props.revenueVsExpenses} />
-        </ChartCard>
-      </div>
+      {chartSections.map((section) => (
+        <div key={section.id} className={section.className}>
+          <ChartCard title={section.title} description={section.description}>
+            {renderChart(section.hasData, section.content)}
+          </ChartCard>
+        </div>
+      ))}
     </section>
   );
 }

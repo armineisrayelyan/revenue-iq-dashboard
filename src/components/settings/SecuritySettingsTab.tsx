@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { EmptyTableState } from "@/components/ui/EmptySections";
 import { Input } from "@/components/ui/Input";
 import { Switch } from "@/components/ui/Switch";
 import type { ISecuritySettings } from "@/types/settings";
@@ -62,22 +63,26 @@ export function SecuritySettingsTab({
           <CardTitle>Active Sessions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {security.sessions.map((session) => (
-            <div
-              key={session.id}
-              className="flex items-center justify-between gap-4 rounded-lg border border-border p-4"
-            >
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  {session.device}
-                </p>
-                <p className="text-caption text-muted-foreground">
-                  {session.location} · {session.lastActive}
-                </p>
+          {security.sessions.length > 0 ? (
+            security.sessions.map((session) => (
+              <div
+                key={session.id}
+                className="flex items-center justify-between gap-4 rounded-lg border border-border p-4"
+              >
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    {session.device}
+                  </p>
+                  <p className="text-caption text-muted-foreground">
+                    {session.location} · {session.lastActive}
+                  </p>
+                </div>
+                {session.current ? <Badge variant="success">Current</Badge> : null}
               </div>
-              {session.current ? <Badge variant="success">Current</Badge> : null}
-            </div>
-          ))}
+            ))
+          ) : (
+            <EmptyTableState inline />
+          )}
           <Button
             variant="destructive"
             onClick={() => onMockSave("security", "All other devices signed out.")}

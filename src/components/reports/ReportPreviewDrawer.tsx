@@ -10,6 +10,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/Drawer";
+import { ReportsEmptyState } from "@/components/ui/EmptyStates";
 import {
   MobileDataCard,
   MobileDataGrid,
@@ -77,40 +78,46 @@ export function ReportPreviewDrawer({
                 <h3 className="mb-3 text-subheading text-foreground">
                   Table Preview
                 </h3>
-                <div className="hidden md:block">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Metric</TableHead>
-                        <TableHead>Value</TableHead>
-                        <TableHead>Change</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {preview.rows.map((row) => (
-                        <TableRow key={row.label}>
-                          <TableCell>{row.label}</TableCell>
-                          <TableCell>{row.value}</TableCell>
-                          <TableCell>{row.change}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                {preview.rows.length > 0 ? (
+                  <>
+                    <div className="hidden md:block">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Metric</TableHead>
+                            <TableHead>Value</TableHead>
+                            <TableHead>Change</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {preview.rows.map((row) => (
+                            <TableRow key={row.label}>
+                              <TableCell>{row.label}</TableCell>
+                              <TableCell>{row.value}</TableCell>
+                              <TableCell>{row.change}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
 
-                <div className="space-y-3 md:hidden">
-                  {preview.rows.map((row) => (
-                    <MobileDataCard key={row.label}>
-                      <p className="text-sm font-medium text-foreground">
-                        {row.label}
-                      </p>
-                      <MobileDataGrid>
-                        <MobileDataRow label="Value" value={row.value} />
-                        <MobileDataRow label="Change" value={row.change} />
-                      </MobileDataGrid>
-                    </MobileDataCard>
-                  ))}
-                </div>
+                    <div className="space-y-3 md:hidden">
+                      {preview.rows.map((row) => (
+                        <MobileDataCard key={row.label}>
+                          <p className="text-sm font-medium text-foreground">
+                            {row.label}
+                          </p>
+                          <MobileDataGrid>
+                            <MobileDataRow label="Value" value={row.value} />
+                            <MobileDataRow label="Change" value={row.change} />
+                          </MobileDataGrid>
+                        </MobileDataCard>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <ReportsEmptyState className="border-0 shadow-none" />
+                )}
               </section>
             </DrawerBody>
           </>

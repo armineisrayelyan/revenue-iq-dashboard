@@ -19,40 +19,34 @@ export function UpcomingRenewals({ subscriptions }: IUpcomingRenewalsProps) {
         </p>
       </CardHeader>
       <CardContent>
-        {subscriptions.length > 0 ? (
-          <div className="space-y-3">
-            {subscriptions.map((subscription) => (
-              <div
-                key={subscription.id}
-                className="flex items-center justify-between gap-3 rounded-lg border border-border p-3"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                    <CalendarClock className="h-4 w-4" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
-                      {subscription.customerName}
-                    </p>
-                    <p className="text-caption text-muted-foreground">
-                      {formatDate(subscription.renewalDate)}
-                    </p>
-                  </div>
+        <div className="space-y-3">
+          {subscriptions.map((subscription) => (
+            <div
+              key={subscription.id}
+              className="flex items-center justify-between gap-3 rounded-lg border border-border p-3"
+            >
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                  <CalendarClock className="h-4 w-4" aria-hidden="true" />
                 </div>
-                <div className="text-right">
-                  <SubscriptionPlanBadge plan={subscription.plan} />
-                  <p className="mt-1 text-caption text-muted-foreground">
-                    {formatCurrency(subscription.price)}
+                <div>
+                  <p className="text-sm font-medium text-foreground">
+                    {subscription.customerName}
+                  </p>
+                  <p className="text-caption text-muted-foreground">
+                    {formatDate(subscription.renewalDate)}
                   </p>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <p className="rounded-lg border border-dashed border-border p-4 text-caption text-muted-foreground">
-            No renewals are due in the next 30 days.
-          </p>
-        )}
+              <div className="text-right">
+                <SubscriptionPlanBadge plan={subscription.plan} />
+                <p className="mt-1 text-caption text-muted-foreground">
+                  {formatCurrency(subscription.price)}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );

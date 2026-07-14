@@ -4,6 +4,10 @@ import { MetricGrid } from "@/components/dashboard/MetricGrid";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { WelcomeSection } from "@/components/dashboard/WelcomeSection";
 import { RecentTransactionsTable } from "@/components/tables/RecentTransactionsTable";
+import {
+  EmptyDashboardSection,
+  EmptyTableState,
+} from "@/components/ui/EmptySections";
 import type { IDashboardOverview } from "@/types/dashboard";
 import type { IPayment } from "@/types/payment";
 
@@ -18,6 +22,10 @@ export function DashboardOverview({
   payments,
   currentDate,
 }: IDashboardOverviewProps) {
+  const hasMetrics = overview.metrics.length > 0;
+  const hasPayments = payments.length > 0;
+  const hasActivity = overview.activity.length > 0;
+
   return (
     <div className="space-y-6">
       <WelcomeSection
@@ -26,7 +34,11 @@ export function DashboardOverview({
         message="You are tracking ahead of plan. Review plan mix and payment health to keep momentum strong."
       />
 
-      <MetricGrid metrics={overview.metrics} />
+      {hasMetrics ? (
+        <MetricGrid metrics={overview.metrics} />
+      ) : (
+        <EmptyDashboardSection />
+      )}
 
       <DashboardCharts
         revenue={overview.revenue}
@@ -43,7 +55,11 @@ export function DashboardOverview({
             </p>
           </CardHeader>
           <CardContent>
-            <RecentTransactionsTable payments={payments} />
+            {hasPayments ? (
+              <RecentTransactionsTable payments={payments} />
+            ) : (
+              <EmptyTableState />
+            )}
           </CardContent>
         </Card>
 
@@ -55,7 +71,11 @@ export function DashboardOverview({
             </p>
           </CardHeader>
           <CardContent>
-            <RecentActivity activity={overview.activity} />
+            {hasActivity ? (
+              <RecentActivity activity={overview.activity} />
+            ) : (
+              <EmptyTableState inline />
+            )}
           </CardContent>
         </Card>
       </section>

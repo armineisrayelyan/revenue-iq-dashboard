@@ -40,12 +40,18 @@ export function ReportsCenter({
     setSelectedReport,
     startExport,
   } = useReportsCenter(center.reports);
+  const hasTemplates = center.templates.length > 0;
+  const hasFilteredReports = filteredReports.length > 0;
 
   return (
     <div className="space-y-6">
       <ReportsHeader />
 
-      <ReportTemplatesGrid templates={center.templates} />
+      {hasTemplates ? (
+        <ReportTemplatesGrid templates={center.templates} />
+      ) : (
+        <ReportsEmptyState />
+      )}
 
       <ReportsFilters
         filters={filters}
@@ -66,7 +72,7 @@ export function ReportsCenter({
             </p>
           </CardHeader>
           <CardContent>
-            {filteredReports.length > 0 ? (
+            {hasFilteredReports ? (
               <GeneratedReportsTable
                 reports={filteredReports}
                 onView={setSelectedReport}

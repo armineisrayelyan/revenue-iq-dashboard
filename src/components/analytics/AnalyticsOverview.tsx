@@ -5,6 +5,11 @@ import { InsightsPanel } from "@/components/analytics/InsightsPanel";
 import { TopCustomersTable } from "@/components/analytics/TopCustomersTable";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { AnalyticsEmptyState } from "@/components/ui/EmptyStates";
+import {
+  EmptyAnalyticsSection,
+  EmptyDashboardSection,
+} from "@/components/ui/EmptySections";
 import type { IAnalyticsOverview } from "@/types/analytics";
 
 interface IAnalyticsOverviewProps {
@@ -12,18 +17,27 @@ interface IAnalyticsOverviewProps {
 }
 
 export function AnalyticsOverview({ overview }: IAnalyticsOverviewProps) {
+  const hasKpis = overview.kpis.length > 0;
+  const hasTopCustomers = overview.topCustomers.length > 0;
+  const hasInsights = overview.insights.length > 0;
+  const hasGeographicData = overview.revenueByCountry.length > 0;
+
   return (
     <div className="space-y-6">
       <AnalyticsHeader />
 
-      <section
-        aria-label="Analytics KPIs"
-        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
-      >
-        {overview.kpis.map((metric) => (
-          <StatCard key={metric.id} metric={metric} />
-        ))}
-      </section>
+      {hasKpis ? (
+        <section
+          aria-label="Analytics KPIs"
+          className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+        >
+          {overview.kpis.map((metric) => (
+            <StatCard key={metric.id} metric={metric} />
+          ))}
+        </section>
+      ) : (
+        <EmptyDashboardSection />
+      )}
 
       <AnalyticsCharts
         revenueTrend={overview.revenueTrend}
@@ -44,14 +58,32 @@ export function AnalyticsOverview({ overview }: IAnalyticsOverviewProps) {
             </p>
           </CardHeader>
           <CardContent>
-            <TopCustomersTable customers={overview.topCustomers} />
+            {hasTopCustomers ? (
+              <TopCustomersTable customers={overview.topCustomers} />
+            ) : (
+              <AnalyticsEmptyState />
+            )}
           </CardContent>
         </Card>
 
-        <InsightsPanel insights={overview.insights} />
+        {hasInsights ? (
+          <InsightsPanel insights={overview.insights} />
+        ) : (
+          <EmptyAnalyticsSection
+            title="AI Insights"
+            description="Signal-rich highlights from revenue and customer trends."
+          />
+        )}
       </section>
 
-      <GeographicOverview countries={overview.revenueByCountry} />
+      {hasGeographicData ? (
+        <GeographicOverview countries={overview.revenueByCountry} />
+      ) : (
+        <EmptyAnalyticsSection
+          title="Geographic Overview"
+          description="Revenue, customer count, and growth by country."
+        />
+      )}
     </div>
   );
 }
